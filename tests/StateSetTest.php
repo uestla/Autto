@@ -3,6 +3,7 @@
 use Autto\State;
 use Autto\StateSet;
 use Autto\E\DuplicateItemException;
+use Autto\E\InvalidStateNameException;
 use Autto\E\UpdatingLockedSetException;
 
 
@@ -58,6 +59,31 @@ class SetTest extends PHPUnit_Framework_TestCase
 			$set->add(new State('q'));
 
 		} catch (UpdatingLockedSetException $e) {}
+	}
+
+
+
+	function testStateName()
+	{
+		try {
+			new State('-');
+			$this->fail();
+
+		} catch (InvalidStateNameException $e) {}
+
+
+		try {
+			new State('_');
+			$this->fail();
+
+		} catch (InvalidStateNameException $e) {}
+
+
+		try {
+			new State('č');
+			$this->fail();
+
+		} catch (InvalidStateNameException $e) {}
 	}
 
 }

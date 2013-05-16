@@ -4,6 +4,7 @@ require_once __DIR__ . '/Automatons/E/DuplicateItemException.php';
 require_once __DIR__ . '/Automatons/E/EmptySetException.php';
 require_once __DIR__ . '/Automatons/E/InvalidItemTypeException.php';
 require_once __DIR__ . '/Automatons/E/InvalidSetException.php';
+require_once __DIR__ . '/Automatons/E/InvalidStateNameException.php';
 require_once __DIR__ . '/Automatons/E/StateNotFoundException.php';
 require_once __DIR__ . '/Automatons/E/SymbolNotFoundException.php';
 require_once __DIR__ . '/Automatons/E/UpdatingLockedSetException.php';

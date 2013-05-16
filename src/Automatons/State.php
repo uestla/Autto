@@ -23,6 +23,10 @@ class State
 	/** @param  string $name */
 	function __construct($name)
 	{
+		if (!preg_match('#^[a-zA-Z0-9]+$#', $name)) {
+			throw new E\InvalidStateNameException('State name can only contain alphanumeric characters.');
+		}
+
 		$this->name = (string) $name;
 	}
 
