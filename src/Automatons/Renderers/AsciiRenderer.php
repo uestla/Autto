@@ -32,6 +32,7 @@ class AsciiRenderer implements IRenderer
 	const S_FINAL = '<';
 	const S_EPSILON = '\eps';
 	const S_STATE_SEP = '|';
+	const S_EMPTY_TARGET = '-';
 
 	const ALIGN_CENTER = 0;
 	const ALIGN_RIGHT = 1;
@@ -112,7 +113,11 @@ class AsciiRenderer implements IRenderer
 					}
 				}
 
-				echo static::fillCell(implode(static::S_STATE_SEP, $names), $this->widths['bodyColumns'][$key]), '|';
+				echo static::fillCell(
+					count($names) ? implode(static::S_STATE_SEP, $names) : static::S_EMPTY_TARGET,
+					$this->widths['bodyColumns'][$key]
+
+				), '|';
 			}
 
 			echo "\n";
