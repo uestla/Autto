@@ -31,7 +31,7 @@ class AsciiRenderer implements IRenderer
 	const S_INITIAL = '>';
 	const S_FINAL = '<';
 	const S_EPSILON = '\eps';
-	const S_STATE_SEP = '|';
+	const S_STATE_SEP = ', ';
 	const S_EMPTY_TARGET = '-';
 
 	const ALIGN_CENTER = 0;
