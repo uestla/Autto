@@ -17,9 +17,10 @@ class RenderersTest extends PHPUnit_Framework_TestCase
 		$a = new Symbol('a');
 		$b = new Symbol('b');
 		$c = new Symbol('c');
+		$eps = new Symbol(Symbol::EPSILON);
 
 		$alphabet = new Alphabet;
-		$alphabet->add($a)->add($b)->add($c);
+		$alphabet->add($a)->add($b)->add($c)->add($eps);
 
 		$q0 = new State('q0');
 		$q1 = new State('q1');
@@ -49,6 +50,7 @@ class RenderersTest extends PHPUnit_Framework_TestCase
 		$transitions->add(new Transition($q0, $trg1, $a));
 		$transitions->add(new Transition($q1, $trg2, $b));
 		$transitions->add(new Transition($q2, $trg3, $c));
+		$transitions->add(new Transition($q0, $trg1, $eps));
 
 		$automaton = new Automaton($states, $alphabet, $transitions, $initials, $finals);
 

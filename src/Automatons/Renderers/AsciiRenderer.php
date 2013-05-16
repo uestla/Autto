@@ -74,7 +74,11 @@ class AsciiRenderer implements IRenderer
 		echo '|', static::fillCell('', $this->widths['firstColumn']), "|";
 
 		foreach ($this->automaton->getAlphabet() as $key => $symbol) {
-			echo static::fillCell($symbol->getValue(), $this->widths['bodyColumns'][$key]), '|';
+			echo static::fillCell(
+				$symbol->isEpsilon() ? static::S_EPSILON : $symbol->getValue(),
+				$this->widths['bodyColumns'][$key]
+
+			), '|';
 		}
 
 		echo "\n";
@@ -174,7 +178,7 @@ class AsciiRenderer implements IRenderer
 	 */
 	static function getMaxBodyCellWidth(Autto\Symbol $symbol, Autto\TransitionSet $transitions)
 	{
-		$max = strlen($symbol->getValue());
+		$max = strlen($symbol->isEpsilon() ? static::S_EPSILON : $symbol->getValue());
 
 		foreach ($transitions as $transition) {
 			$tmp = 0;
