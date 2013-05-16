@@ -43,4 +43,15 @@ class Alphabet extends Set
 		$this->values[$value] = TRUE;
 	}
 
+
+
+	/**
+	 * @param  Symbol $symbol
+	 * @return bool
+	 */
+	function has($symbol)
+	{
+		return isset($this->values[$symbol->getValue()]) || parent::has($symbol);
+	}
+
 }
