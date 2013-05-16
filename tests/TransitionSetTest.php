@@ -11,6 +11,7 @@ class TransitionSetTest extends PHPUnit_Framework_TestCase
 		$a = new Autto\Symbol('a');
 		$b = new Autto\Symbol('b');
 		$c = new Autto\Symbol('c');
+		$d = new Autto\Symbol('d');
 
 		$q0 = new Autto\State('q0');
 		$q1 = new Autto\State('q1');
@@ -40,6 +41,18 @@ class TransitionSetTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(2, count($transitions->filterByState($q3)));
 		$this->assertEquals(1, count($transitions->filterByState($q2)));
 		$this->assertEquals(0, count($transitions->filterByState($q1)));
+
+		$this->assertTrue($transitions->filterByState($q3)->has($t4));
+		$this->assertTrue($transitions->filterByState($q3)->has($t2));
+		$this->assertFalse($transitions->filterByState($q3)->has($t1));
+
+		$this->assertEquals(2, count($transitions->filterBySymbol($a)));
+		$this->assertEquals(1, count($transitions->filterBySymbol($b)));
+		$this->assertEquals(0, count($transitions->filterBySymbol($d)));
+
+		$this->assertTrue($transitions->filterBySymbol($a)->has($t1));
+		$this->assertTrue($transitions->filterBySymbol($a)->has($t4));
+		$this->assertFalse($transitions->filterBySymbol($a)->has($t2));
 	}
 
 }
