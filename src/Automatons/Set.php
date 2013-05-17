@@ -132,16 +132,6 @@ class Set implements \Iterator, \Countable
 
 
 
-	// === \IteratorAggregate ====================================
-
-	/** @return \ArrayIterator */
-	/* function getIterator()
-	{
-		return new \ArrayIterator($this->items);
-	} */
-
-
-
 	// === \Iterator ====================================
 
 	/** @return void */
