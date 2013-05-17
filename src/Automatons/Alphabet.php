@@ -18,6 +18,9 @@ class Alphabet extends Set
 	/** @var array */
 	private $values = array();
 
+	/** @var bool */
+	private $hasEpsilon = FALSE;
+
 
 
 	function __construct()
@@ -40,6 +43,10 @@ class Alphabet extends Set
 			throw new E\DuplicateItemException;
 		}
 
+		if (!$this->hasEpsilon && $item->isEpsilon()) {
+			$this->hasEpsilon = TRUE;
+		}
+
 		$this->values[$value] = TRUE;
 	}
 
@@ -52,6 +59,14 @@ class Alphabet extends Set
 	function has($symbol)
 	{
 		return isset($this->values[$symbol->getValue()]) || parent::has($symbol);
+	}
+
+
+
+	/** @return bool */
+	function hasEpsilon()
+	{
+		return $this->hasEpsilon;
 	}
 
 }

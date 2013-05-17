@@ -59,6 +59,51 @@ class Automaton
 
 
 
+	/** @return Automaton */
+	function removeEpsilon()
+	{
+		if ($this->alphabet->hasEpsilon()) {
+			$finals = new StateSet;
+			$transitions = new TransitionSet;
+
+			foreach ($this->states as $state) {
+				$closure = $this->epsilonClosure($state);
+
+				foreach ($this->alphabet as $symbol) {
+					if (!$symbol->isEpsilon()) {
+						$to = new StateSet;
+						foreach ($closure as $s) {
+							!$finals->has($s) && $finals->add($s);
+
+							foreach ($this->transitions->filterByState($s)->filterBySymbol($symbol) as $t) {
+								foreach ($t->getTo() as $target) {
+									!$to->has($target) && $to->add($target);
+								}
+							}
+						}
+
+						$transitions->add(new Transition($state, $to, $symbol));
+					}
+				}
+			}
+
+			$alphabet = new Alphabet;
+			foreach ($this->alphabet as $symbol) {
+				if (!$symbol->isEpsilon()) {
+					$alphabet->add($symbol);
+				}
+			}
+
+			$this->alphabet = $alphabet;
+			$this->transitions = $transitions;
+			$this->finals = $finals;
+		}
+
+		return $this;
+	}
+
+
+
 	/**
 	 * @param  State $state
 	 * @return StateSet
