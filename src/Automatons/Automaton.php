@@ -42,23 +42,7 @@ class Automaton
 	function __construct(StateSet $states, Alphabet $alphabet, TransitionSet $transitions,
 			StateSet $initials, StateSet $finals)
 	{
-		$states->lock();
-		$alphabet->lock();
-		$transitions->lock();
-		$initials->lock();
-		$finals->lock();
-
-		foreach ($transitions as $transition) {
-			$transition->getTo()->lock();
-		}
-
-		$this->states = $states;
-		$this->alphabet = $alphabet;
-		$this->transitions = $transitions;
-		$this->initials = $initials;
-		$this->finals = $finals;
-
-		$this->validate();
+		$this->construct($states, $alphabet, $transitions, $initials, $finals);
 	}
 
 
@@ -94,9 +78,7 @@ class Automaton
 				}
 			}
 
-			$this->alphabet = $alphabet;
-			$this->transitions = $transitions;
-			$this->finals = $finals;
+			$this->construct($this->states, $alphabet, $transitions, $this->initials, $finals);
 		}
 
 		return $this;
@@ -122,6 +104,38 @@ class Automaton
 		}
 
 		return $closure;
+	}
+
+
+
+	/**
+	 * @param  StateSet $states
+	 * @param  Alphabet $alphabet
+	 * @param  TransitionSet $transitions
+	 * @param  StateSet $initials
+	 * @param  StateSet $finals
+	 */
+	private function construct(StateSet $states, Alphabet $alphabet, TransitionSet $transitions,
+			StateSet $initials, StateSet $finals)
+	{
+		$states->lock();
+		$alphabet->lock();
+		$transitions->lock();
+		$initials->lock();
+		$finals->lock();
+
+		foreach ($transitions as $transition) {
+			$transition->getTo()->lock();
+		}
+
+		$this->states = $states;
+		$this->alphabet = $alphabet;
+		$this->transitions = $transitions;
+		$this->initials = $initials;
+		$this->finals = $finals;
+
+		$this->validate();
+		$this->deterministic = NULL;
 	}
 
 
