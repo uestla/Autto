@@ -7,7 +7,7 @@ use Autto\E\InvalidStateNameException;
 use Autto\E\UpdatingLockedSetException;
 
 
-class SetTest extends PHPUnit_Framework_TestCase
+class StateSetTest extends PHPUnit_Framework_TestCase
 {
 
 	function testBasicsSet()

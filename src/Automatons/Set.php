@@ -12,7 +12,7 @@
 namespace Autto;
 
 
-abstract class Set implements \IteratorAggregate, \Countable
+class Set implements \Iterator, \Countable
 {
 
 	/** @var string */
@@ -26,9 +26,6 @@ abstract class Set implements \IteratorAggregate, \Countable
 
 	/** @var bool */
 	private $locked = FALSE;
-
-	/** @var array */
-	private $keys;
 
 
 
@@ -138,9 +135,51 @@ abstract class Set implements \IteratorAggregate, \Countable
 	// === \IteratorAggregate ====================================
 
 	/** @return \ArrayIterator */
-	function getIterator()
+	/* function getIterator()
 	{
 		return new \ArrayIterator($this->items);
+	} */
+
+
+
+	// === \Iterator ====================================
+
+	/** @return void */
+	function rewind()
+	{
+		reset($this->items);
+	}
+
+
+
+	/** @return int */
+	function key()
+	{
+		return key($this->items);
+	}
+
+
+
+	/** @return mixed */
+	function current()
+	{
+		return current($this->items);
+	}
+
+
+
+	/** @return void */
+	function next()
+	{
+		next($this->items);
+	}
+
+
+
+	/** @return bool */
+	function valid()
+	{
+		return current($this->items) !== FALSE;
 	}
 
 
