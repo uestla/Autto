@@ -48,6 +48,16 @@ class TransitionSet extends Set
 
 
 
+	/** @return TransitionSet */
+	function filterByEpsilon()
+	{
+		return $this->filter(function (Transition $transition) {
+			return $transition->getOn()->getValue() === Symbol::EPSILON;
+		});
+	}
+
+
+
 	/**
 	 * @param  \Closure $filter
 	 * @return TransitionSet

@@ -60,6 +60,28 @@ class Automaton
 
 
 	/**
+	 * @param  State $state
+	 * @return StateSet
+	 */
+	function epsilonClosure(State $state)
+	{
+		$closure = new StateSet;
+		$closure->add($state);
+
+		foreach ($closure as $s) {
+			foreach ($this->transitions->filterByState($s)->filterByEpsilon() as $transition) {
+				foreach ($transition->getTo() as $target) {
+					!$closure->has($target) && $closure->add($target);
+				}
+			}
+		}
+
+		return $closure;
+	}
+
+
+
+	/**
 	 * @return void
 	 * @throws E\EmptySetException
 	 * @throws E\InvalidSetException

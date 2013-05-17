@@ -42,8 +42,23 @@ class AutomatonTest extends PHPUnit_Framework_TestCase
 			$transitions->add($t);
 
 			new Automaton($states, $alphabet, $transitions, $initials, new StateSet);
+			$this->fail();
 
 		} catch (InvalidSetException $e) {}
+	}
+
+
+
+	function testEpsilonClosure()
+	{
+		$automaton = new TestingAutomaton;
+		foreach ($automaton->getStates() as $state) {
+			if ($state->getName() === 'B') {
+				break;
+			}
+		}
+
+		$this->assertEquals(2, count($automaton->epsilonClosure($state)));
 	}
 
 }
