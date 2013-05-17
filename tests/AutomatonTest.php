@@ -70,8 +70,12 @@ class AutomatonTest extends PHPUnit_Framework_TestCase
 		$automaton = new TestingAutomaton;
 		$renderer->render($automaton);
 
+		$this->assertTrue($automaton->getAlphabet()->hasEpsilon());
+
 		$automaton->removeEpsilon();
 		$renderer->render($automaton);
+
+		$this->assertFalse($automaton->getAlphabet()->hasEpsilon());
 	}
 
 }
