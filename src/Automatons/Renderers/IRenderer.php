@@ -17,7 +17,10 @@ use Autto;
 interface IRenderer
 {
 
-	/** @param  Autto\Automaton $a */
+	/**
+	 * @param  Autto\Automaton $a
+	 * @return void
+	 */
 	function render(Autto\Automaton $a);
 
 }
