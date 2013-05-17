@@ -56,7 +56,7 @@ class AsciiRenderer implements IRenderer
 	private function calculateWidths()
 	{
 		$this->widths['firstColumn'] = static::getMaxStateNameLen($this->automaton->getStates())
-				+ strlen(static::S_INITIAL) + strlen(static::S_FINAL) + static::C_PADDING;
+				+ strlen(static::S_INITIAL) + strlen(static::S_FINAL) + 1 + static::C_PADDING;
 
 		foreach ($this->automaton->getAlphabet() as $key => $symbol) {
 			$this->widths['bodyColumns'][$key] = static::getMaxBodyCellWidth($symbol,
@@ -92,19 +92,20 @@ class AsciiRenderer implements IRenderer
 	private function renderBody()
 	{
 		foreach ($this->automaton->getStates() as $state) {
-			$s = $state->getName();
-			$padLen = strlen($s) + strlen(static::S_INITIAL) + strlen(static::S_FINAL);
+			$s = '';
+			$padLen = strlen($s) + strlen(static::S_INITIAL) + strlen(static::S_FINAL) + 1;
 
 			$isInitial = $this->automaton->getInitialStates()->has($state);
 			if ($isInitial) {
-				$s .= ' ' . static::S_INITIAL;
+				$s .= static::S_INITIAL;
 			}
 
 			if ($this->automaton->getFinalStates()->has($state)) {
 				$s .= ($isInitial ? '' : ' ') . static::S_FINAL;
 			}
 
-			$s = str_pad($s, $padLen);
+			$s .= ($s === '' ? '' : ' ') . $state->getName();
+			$s = str_pad($s, $padLen, ' ', STR_PAD_LEFT);
 
 			echo '|', static::fillCell($s, $this->widths['firstColumn'], static::ALIGN_RIGHT), "|";
 
