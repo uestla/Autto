@@ -89,9 +89,7 @@ class Automaton
 
 			$alphabet = new Alphabet;
 			foreach ($this->alphabet as $symbol) {
-				if (!$symbol->isEpsilon()) {
-					$alphabet->add($symbol);
-				}
+				!$symbol->isEpsilon() && $alphabet->add($symbol);
 			}
 
 			$this->alphabet = $alphabet;
