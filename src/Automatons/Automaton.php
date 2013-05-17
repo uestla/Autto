@@ -48,6 +48,10 @@ class Automaton
 		$initials->lock();
 		$finals->lock();
 
+		foreach ($transitions as $transition) {
+			$transition->getTo()->lock();
+		}
+
 		$this->states = $states;
 		$this->alphabet = $alphabet;
 		$this->transitions = $transitions;
