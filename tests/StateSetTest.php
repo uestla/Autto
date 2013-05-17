@@ -66,21 +66,7 @@ class StateSetTest extends PHPUnit_Framework_TestCase
 	function testStateName()
 	{
 		try {
-			new State('-');
-			$this->fail();
-
-		} catch (InvalidStateNameException $e) {}
-
-
-		try {
-			new State('_');
-			$this->fail();
-
-		} catch (InvalidStateNameException $e) {}
-
-
-		try {
-			new State('č');
+			new State(' ');
 			$this->fail();
 
 		} catch (InvalidStateNameException $e) {}
