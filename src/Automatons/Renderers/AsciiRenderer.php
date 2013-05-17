@@ -187,7 +187,8 @@ class AsciiRenderer implements IRenderer
 				$tmp += strlen($state->getName()) + strlen(static::S_STATE_SEP);
 			}
 
-			if (--$tmp > $max) {
+			$tmp -= strlen(static::S_STATE_SEP);
+			if ($tmp > $max) {
 				$max = $tmp;
 			}
 		}
