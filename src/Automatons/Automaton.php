@@ -63,14 +63,17 @@ class Automaton
 	function removeEpsilon()
 	{
 		if ($this->alphabet->hasEpsilon()) {
-			$finals = new StateSet;
+			$alphabet = new Alphabet;
 			$transitions = new TransitionSet;
+			$finals = new StateSet;
 
 			foreach ($this->states as $state) {
 				$closure = $this->epsilonClosure($state);
 
 				foreach ($this->alphabet as $symbol) {
 					if (!$symbol->isEpsilon()) {
+						!$alphabet->has($symbol) && $alphabet->add($symbol);
+
 						$to = new StateSet;
 						foreach ($closure as $s) {
 							!$finals->has($s) && $finals->add($s);
@@ -85,11 +88,6 @@ class Automaton
 						$transitions->add(new Transition($state, $to, $symbol));
 					}
 				}
-			}
-
-			$alphabet = new Alphabet;
-			foreach ($this->alphabet as $symbol) {
-				!$symbol->isEpsilon() && $alphabet->add($symbol);
 			}
 
 			$this->alphabet = $alphabet;
