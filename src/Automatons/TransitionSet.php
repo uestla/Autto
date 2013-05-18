@@ -24,6 +24,19 @@ class TransitionSet extends Set
 
 
 	/**
+	 * @param  Transition $item
+	 * @return TransitionSet
+	 */
+	function add($item)
+	{
+		parent::add($item);
+		$item->getTo()->lock();
+		return $this;
+	}
+
+
+
+	/**
 	 * @param  State $state
 	 * @return TransitionSet
 	 */
