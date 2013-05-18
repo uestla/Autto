@@ -23,31 +23,43 @@ class Alphabet extends Set
 
 
 
-	function __construct()
+	/** @param  mixed $items */
+	function __construct($items = NULL)
 	{
-		parent::__construct('Autto\Symbol');
+		parent::__construct('Autto\Symbol', $items);
 	}
 
 
 
 	/**
-	 * @param  Symbol $item
-	 * @return void
+	 * @param  Symbol $symbol
+	 * @return Alphabet
 	 */
-	function beforeAdd($item)
+	function add($symbol)
 	{
-		parent::beforeAdd($item);
+		parent::add($symbol);
+		$this->values[$symbol->getValue()] = TRUE;
 
-		$value = $item->getValue();
-		if (isset($this->values[$value])) {
-			throw new E\DuplicateItemException;
-		}
-
-		if (!$this->hasEpsilon && $item->isEpsilon()) {
+		if (!$this->hasEpsilon && $symbol->isEpsilon()) {
 			$this->hasEpsilon = TRUE;
 		}
 
-		$this->values[$value] = TRUE;
+		return $this;
+	}
+
+
+
+	/**
+	 * @param  Symbol $symbol
+	 * @return void
+	 */
+	function beforeAdd($symbol)
+	{
+		parent::beforeAdd($symbol);
+
+		if (isset($this->values[$symbol->getValue()])) {
+			throw new E\DuplicateItemException;
+		}
 	}
 
 

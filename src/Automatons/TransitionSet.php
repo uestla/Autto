@@ -15,9 +15,10 @@ namespace Autto;
 class TransitionSet extends Set
 {
 
-	function __construct()
+	/** @param  mixed $items */
+	function __construct($items = NULL)
 	{
-		parent::__construct('Autto\Transition');
+		parent::__construct('Autto\Transition', $items);
 	}
 
 

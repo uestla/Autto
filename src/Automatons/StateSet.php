@@ -20,9 +20,23 @@ class StateSet extends Set
 
 
 
-	function __construct()
+	/** @param  mixed $items */
+	function __construct($items = NULL)
 	{
-		parent::__construct('Autto\State');
+		parent::__construct('Autto\State', $items);
+	}
+
+
+
+	/**
+	 * @param  State $item
+	 * @return StateSet
+	 */
+	function add($item)
+	{
+		parent::add($item);
+		$this->names[$item->getName()] = TRUE;
+		return $this;
 	}
 
 
@@ -36,12 +50,9 @@ class StateSet extends Set
 	{
 		parent::beforeAdd($state);
 
-		$name = $state->getName();
-		if (isset($this->names[$name])) {
+		if (isset($this->names[$state->getName()])) {
 			throw new E\DuplicateItemException;
 		}
-
-		$this->names[$name] = TRUE;
 	}
 
 

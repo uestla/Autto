@@ -29,10 +29,19 @@ class Set implements \Iterator, \Countable
 
 
 
-	/** @param  string $type */
-	function __construct($type)
+	/**
+	 * @param  string $type
+	 * @param  mixed $items
+	 */
+	function __construct($type, $items = NULL)
 	{
 		$this->type = $type;
+
+		if ($items !== NULL) {
+			foreach ($items as $item) {
+				$this->add($item);
+			}
+		}
 	}
 
 
@@ -44,15 +53,9 @@ class Set implements \Iterator, \Countable
 	 */
 	function add($item)
 	{
-		$this->checkLock();
-
-		if (!is_object($item) || !$item instanceof $this->type) {
-			throw new E\InvalidItemTypeException;
-		}
-
 		$this->beforeAdd($item);
 		$this->items[] = $item;
-
+		$this->hashes[spl_object_hash($item)] = TRUE;
 		return $this;
 	}
 
@@ -65,12 +68,15 @@ class Set implements \Iterator, \Countable
 	 */
 	function beforeAdd($item)
 	{
-		$hash = spl_object_hash($item);
-		if (isset($this->hashes[$hash])) {
-			throw new E\DuplicateItemException;
+		$this->checkLock();
+
+		if (!is_object($item) || !$item instanceof $this->type) {
+			throw new E\InvalidItemTypeException;
 		}
 
-		$this->hashes[$hash] = TRUE;
+		if ($this->has($item)) {
+			throw new E\DuplicateItemException;
+		}
 	}
 
 
