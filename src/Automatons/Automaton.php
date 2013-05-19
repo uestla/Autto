@@ -64,7 +64,7 @@ class Automaton
 
 						$to = new StateSet;
 						foreach ($closure as $s) {
-							!$finals->has($s) && $finals->add($s);
+							$this->finals->has($s) && !$finals->has($s) && $finals->add($s);
 
 							foreach ($this->transitions->filterByState($s)->filterBySymbol($symbol) as $t) {
 								foreach ($t->getTo() as $target) {
