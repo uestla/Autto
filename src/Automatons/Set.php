@@ -47,7 +47,7 @@ class Set implements \Iterator, \Countable
 
 
 	/**
-	 * @param  mixed $item
+	 * @param  object $item
 	 * @return Set
 	 * @throws E\InvalidItemTypeException
 	 */
@@ -62,7 +62,7 @@ class Set implements \Iterator, \Countable
 
 
 	/**
-	 * @param  mixed $item
+	 * @param  object $item
 	 * @return void
 	 * @throws E\DuplicateItemException
 	 */
@@ -82,7 +82,7 @@ class Set implements \Iterator, \Countable
 
 
 	/**
-	 * @param  mixed $item
+	 * @param  object $item
 	 * @return bool
 	 */
 	function has($item)

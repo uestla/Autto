@@ -92,9 +92,7 @@ class Automaton
 	 */
 	function epsilonClosure(State $state)
 	{
-		$closure = new StateSet;
-		$closure->add($state);
-
+		$closure = new StateSet(array($state));
 		foreach ($closure as $s) {
 			foreach ($this->transitions->filterByState($s)->filterByEpsilon() as $transition) {
 				foreach ($transition->getTo() as $target) {
