@@ -78,8 +78,9 @@ class TransitionSet extends Set
 	 */
 	private function filter(\Closure $filter)
 	{
+		$self = clone $this;
 		$set = new TransitionSet;
-		foreach ($this as $transition) {
+		foreach ($self as $transition) {
 			if ($filter($transition)) {
 				$set->add($transition);
 			}

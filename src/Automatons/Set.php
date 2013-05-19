@@ -98,7 +98,8 @@ class Set implements \Iterator, \Countable
 	 */
 	function isSubsetOf(Set $set)
 	{
-		foreach ($this as $item) {
+		$self = clone $this;
+		foreach ($self as $item) {
 			if (!$set->has($item)) {
 				return FALSE;
 			}

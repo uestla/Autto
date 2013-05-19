@@ -18,8 +18,13 @@ class SetTest extends PHPUnit_Framework_TestCase
 
 		$counter = 0;
 		foreach ($set as $item) {
-			if (++$counter < 10) {
-				$set->add(new SetItem);
+			foreach (range(1, 3) as $foo) {
+				if (++$counter < 10) {
+					$set->add(new SetItem);
+
+				} else {
+					break 2;
+				}
 			}
 		}
 
