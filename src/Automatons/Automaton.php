@@ -30,6 +30,9 @@ class Automaton
 	/** @var StateSet */
 	protected $finals;
 
+	/** @var bool */
+	protected $deterministic = NULL;
+
 
 
 	/**
@@ -106,6 +109,56 @@ class Automaton
 
 
 
+	/** @return Automaton */
+	function determinize()
+	{
+		if (!$this->isDeterministic()) {
+			$this->removeEpsilon();
+
+			$states = new StateSet;
+			$transitions = new TransitionSet;
+			$initials = new StateSet;
+			$finals = new StateSet;
+
+			$queue = new StateSetSet(array($this->initials));
+			foreach ($queue as $set) {
+				$new = Utils\Helpers::joinStates($set);
+				$states->add($new);
+				!count($initials) && $initials->add($new);
+
+				foreach ($this->alphabet as $symbol) {
+					$to = new StateSet;
+					foreach ($set as $state) {
+						$this->finals->has($state) && !$finals->has($new) && $finals->add($new);
+
+						foreach ($this->transitions->filterByState($state)->filterBySymbol($symbol) as $transition) {
+							foreach ($transition->getTo() as $t) {
+								!$to->has($t) && $to->add($t);
+							}
+						}
+					}
+
+					$target = Utils\Helpers::joinStates($to);
+					if (($tmp = $states->getByName($target->getName())) !== NULL) {
+						$target = $tmp;
+					}
+
+					$transitions->add(new Transition($new, new StateSet(array($target)), $symbol));
+					!$queue->has($to) && $queue->add($to);
+				}
+			}
+
+			// dump($states); die();
+
+			$this->construct($states, $this->alphabet, $transitions, $initials, $finals);
+			$this->deterministic = TRUE;
+		}
+
+		return $this;
+	}
+
+
+
 	/**
 	 * @param  StateSet $states
 	 * @param  Alphabet $alphabet
@@ -169,6 +222,37 @@ class Automaton
 
 
 
+	/** @return bool */
+	private function discoverDeterminism()
+	{
+		if ($this->alphabet->hasEpsilon() || count($this->initials) > 1) {
+			return FALSE;
+		}
+
+		$reachable = new StateSet;
+		foreach ($this->states as $state) {
+			foreach ($this->alphabet as $symbol) {
+				foreach ($this->transitions->filterByState($state)->filterBySymbol($symbol) as $transition) {
+					$this->initials->has($transition->getFrom())
+							&& !$reachable->has($transition->getFrom())
+							&& $reachable->add($transition->getFrom());
+
+					if (count($transition->getTo()) !== 1) {
+						return FALSE;
+					}
+
+					foreach ($transition->getTo() as $target) {
+						!$reachable->has($target) && $reachable->add($target);
+					}
+				}
+			}
+		}
+
+		return count($reachable) === count($this->states);
+	}
+
+
+
 	/** @return StateSet */
 	function getStates()
 	{
@@ -205,6 +289,18 @@ class Automaton
 	function getFinalStates()
 	{
 		return $this->finals;
+	}
+
+
+
+	/** @return bool */
+	function isDeterministic()
+	{
+		if ($this->deterministic === NULL) {
+			$this->deterministic = $this->discoverDeterminism();
+		}
+
+		return $this->deterministic;
 	}
 
 }

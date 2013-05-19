@@ -66,4 +66,22 @@ class StateSet extends Set
 		return isset($this->names[$state->getName()]) || parent::has($state);
 	}
 
+
+
+	/**
+	 * @param  string $name
+	 * @return State|NULL
+	 */
+	function getByName($name)
+	{
+		$self = clone $this;
+		foreach ($self as $state) {
+			if ($state->getName() === $name) {
+				return $state;
+			}
+		}
+
+		return NULL;
+	}
+
 }
