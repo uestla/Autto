@@ -148,8 +148,6 @@ class Automaton
 				}
 			}
 
-			// dump($states); die();
-
 			$this->construct($states, $this->alphabet, $transitions, $initials, $finals);
 			$this->deterministic = TRUE;
 		}
