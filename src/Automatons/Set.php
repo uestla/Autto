@@ -118,6 +118,14 @@ class Set implements \Iterator, \Countable
 
 
 
+	/** @return bool */
+	function isLocked()
+	{
+		return $this->locked;
+	}
+
+
+
 	/**
 	 * @return void
 	 * @throws E\UpdatingLockedSetException

@@ -15,6 +15,11 @@ namespace Autto;
 class TransitionSet extends Set
 {
 
+	/** @var TransitionSet[] */
+	private static $filters = array();
+
+
+
 	/** @param  mixed $items */
 	function __construct($items = NULL)
 	{
@@ -42,7 +47,7 @@ class TransitionSet extends Set
 	 */
 	function filterByState(State $state)
 	{
-		return $this->filter(function (Transition $transition) use ($state) {
+		return self::loadFilter($this, $state, function (Transition $transition) use ($state) {
 			return $transition->getFrom() === $state;
 		});
 	}
@@ -55,7 +60,7 @@ class TransitionSet extends Set
 	 */
 	function filterBySymbol(Symbol $symbol)
 	{
-		return $this->filter(function (Transition $transition) use ($symbol) {
+		return self::loadFilter($this, $symbol, function (Transition $transition) use ($symbol) {
 			return $transition->getOn() === $symbol;
 		});
 	}
@@ -88,6 +93,24 @@ class TransitionSet extends Set
 
 		$set->lock();
 		return $set;
+	}
+
+
+
+	/**
+	 * @param  TransitionSet $set
+	 * @param  State|Symbol $arg
+	 * @param  \Closure $loader
+	 * @return TransitionSet
+	 */
+	private static function loadFilter(TransitionSet $set, $arg, \Closure $loader)
+	{
+		$key = md5(spl_object_hash($set) . spl_object_hash($arg));
+		if (!$set->isLocked() || !isset(self::$filters[$key])) {
+			self::$filters[$key] = $set->filter($loader);
+		}
+
+		return self::$filters[$key];
 	}
 
 }
