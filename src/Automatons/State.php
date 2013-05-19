@@ -16,7 +16,7 @@ class State
 {
 
 	/** @var string */
-	protected $name;
+	private $name;
 
 
 

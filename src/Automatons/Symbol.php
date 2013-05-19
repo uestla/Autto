@@ -16,7 +16,7 @@ class Symbol
 {
 
 	/** @var mixed */
-	protected $value;
+	private $value;
 
 	const EPSILON = '';
 

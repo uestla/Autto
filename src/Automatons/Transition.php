@@ -16,13 +16,13 @@ class Transition
 {
 
 	/** @var State */
-	protected $from;
+	private $from;
 
 	/** @var StateSet */
-	protected $to;
+	private $to;
 
 	/** @var Symbol */
-	protected $on;
+	private $on;
 
 
 
