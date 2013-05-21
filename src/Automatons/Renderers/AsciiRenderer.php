@@ -12,6 +12,9 @@
 namespace Autto\Renderers;
 
 use Autto;
+use Autto\Components\Alphabet\Symbol;
+use Autto\Components\States\StateSet;
+use Autto\Components\Transitions\TransitionSet;
 
 
 class AsciiRenderer implements IRenderer
@@ -157,10 +160,10 @@ class AsciiRenderer implements IRenderer
 
 
 	/**
-	 * @param  Autto\StateSet $states
+	 * @param  StateSet $states
 	 * @return int
 	 */
-	static function getMaxStateNameLen(Autto\StateSet $states)
+	static function getMaxStateNameLen(StateSet $states)
 	{
 		$max = 0;
 		foreach ($states as $state) {
@@ -176,11 +179,11 @@ class AsciiRenderer implements IRenderer
 
 
 	/**
-	 * @param  Autto\Symbol $symbol
-	 * @param  Autto\TransitionSet $transitions
+	 * @param  Symbol $symbol
+	 * @param  TransitionSet $transitions
 	 * @return int
 	 */
-	static function getMaxBodyCellWidth(Autto\Symbol $symbol, Autto\TransitionSet $transitions)
+	static function getMaxBodyCellWidth(Symbol $symbol, TransitionSet $transitions)
 	{
 		$max = strlen($symbol->isEpsilon() ? static::S_EPSILON : $symbol->getValue());
 

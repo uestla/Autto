@@ -1,10 +1,10 @@
 <?php
 
-use Autto\State;
-use Autto\StateSet;
-use Autto\E\DuplicateItemException;
-use Autto\E\InvalidStateNameException;
-use Autto\E\UpdatingLockedSetException;
+use Autto\Components\States\State;
+use Autto\Components\States\StateSet;
+use Autto\Exceptions\DuplicateItemException;
+use Autto\Exceptions\InvalidStateNameException;
+use Autto\Exceptions\UpdatingLockedSetException;
 
 
 class StateSetTest extends PHPUnit_Framework_TestCase

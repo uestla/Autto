@@ -9,7 +9,7 @@
  * @link     https://github.com/uestla/Autto
  */
 
-namespace Autto;
+namespace Autto\Components\Alphabet;
 
 
 class Symbol

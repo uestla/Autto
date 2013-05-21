@@ -11,6 +11,12 @@
 
 namespace Autto;
 
+use Autto\Components\States\State;
+use Autto\Components\States\StateSet;
+use Autto\Components\Alphabet\Alphabet;
+use Autto\Components\Transitions\Transition;
+use Autto\Components\Transitions\TransitionSet;
+
 
 class Automaton
 {
@@ -187,33 +193,33 @@ class Automaton
 
 	/**
 	 * @return void
-	 * @throws E\EmptySetException
-	 * @throws E\InvalidSetException
-	 * @throws E\StateNotFoundException
+	 * @throws Exceptions\EmptySetException
+	 * @throws Exceptions\InvalidSetException
+	 * @throws Exceptions\StateNotFoundException
 	 */
 	private function validate()
 	{
 		if (!count($this->alphabet) || !count($this->transitions)
 				|| !count($this->states) || !count($this->initials)) {
-			throw new E\EmptySetException;
+			throw new Exceptions\EmptySetException;
 		}
 
 		if (!$this->initials->isSubsetOf($this->states)
 				|| !$this->finals->isSubsetOf($this->states)) {
-			throw new E\InvalidSetException;
+			throw new Exceptions\InvalidSetException;
 		}
 
 		foreach ($this->transitions as $transition) {
 			if (!$this->states->has($transition->getFrom())) {
-				throw new E\StateNotFoundException($transition->getFrom());
+				throw new Exceptions\StateNotFoundException($transition->getFrom());
 			}
 
 			if (!$transition->getTo()->isSubsetOf($this->states)) {
-				throw new E\InvalidSetException;
+				throw new Exceptions\InvalidSetException;
 			}
 
 			if (!$this->alphabet->has($transition->getOn())) {
-				throw new E\SymbolNotFoundException($transition->getOn());
+				throw new Exceptions\SymbolNotFoundException($transition->getOn());
 			}
 		}
 	}

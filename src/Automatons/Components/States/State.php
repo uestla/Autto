@@ -9,7 +9,9 @@
  * @link     https://github.com/uestla/Autto
  */
 
-namespace Autto;
+namespace Autto\Components\States;
+
+use Autto\Exceptions;
 
 
 class State
@@ -24,7 +26,7 @@ class State
 	function __construct($name)
 	{
 		if (preg_match('#\s#', $name)) {
-			throw new E\InvalidStateNameException('State name must not containt white characters.');
+			throw new Exceptions\InvalidStateNameException('State name must not containt white characters.');
 		}
 
 		$this->name = (string) $name;

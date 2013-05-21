@@ -9,7 +9,11 @@
  * @link     https://github.com/uestla/Autto
  */
 
-namespace Autto;
+namespace Autto\Components\Transitions;
+
+use Autto\Components\States\State;
+use Autto\Components\States\StateSet;
+use Autto\Components\Alphabet\Symbol;
 
 
 class Transition

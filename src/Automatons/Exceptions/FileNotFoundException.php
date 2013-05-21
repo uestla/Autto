@@ -9,8 +9,8 @@
  * @link     https://github.com/uestla/Autto
  */
 
-namespace Autto\E;
+namespace Autto\Exceptions;
 
 
-class EmptySetException extends \Exception
+class FileNotFoundException extends \Exception
 {}

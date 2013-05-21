@@ -8,9 +8,7 @@ class SetItem
 class SetTest extends PHPUnit_Framework_TestCase
 {
 
-	/**
-	 * Iterating through set while dynamically adding new items
-	 */
+	/** Iterating through set while dynamically adding new items */
 	function testIteration()
 	{
 		$set = new Autto\Set('SetItem');

@@ -49,7 +49,7 @@ class Set implements \Iterator, \Countable
 	/**
 	 * @param  object $item
 	 * @return Set
-	 * @throws E\InvalidItemTypeException
+	 * @throws Exceptions\InvalidItemTypeException
 	 */
 	function add($item)
 	{
@@ -64,18 +64,18 @@ class Set implements \Iterator, \Countable
 	/**
 	 * @param  object $item
 	 * @return void
-	 * @throws E\DuplicateItemException
+	 * @throws Exceptions\DuplicateItemException
 	 */
 	function beforeAdd($item)
 	{
 		$this->checkLock();
 
 		if (!is_object($item) || !$item instanceof $this->type) {
-			throw new E\InvalidItemTypeException;
+			throw new Exceptions\InvalidItemTypeException;
 		}
 
 		if ($this->has($item)) {
-			throw new E\DuplicateItemException;
+			throw new Exceptions\DuplicateItemException;
 		}
 	}
 
@@ -128,12 +128,12 @@ class Set implements \Iterator, \Countable
 
 	/**
 	 * @return void
-	 * @throws E\UpdatingLockedSetException
+	 * @throws Exceptions\UpdatingLockedSetException
 	 */
 	function checkLock()
 	{
 		if ($this->locked) {
-			throw new E\UpdatingLockedSetException;
+			throw new Exceptions\UpdatingLockedSetException;
 		}
 	}
 

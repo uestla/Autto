@@ -9,7 +9,7 @@
  * @link     https://github.com/uestla/Autto
  */
 
-namespace Autto\E;
+namespace Autto\Exceptions;
 
 
 class SymbolNotFoundException extends \Exception

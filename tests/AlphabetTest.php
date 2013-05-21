@@ -1,22 +1,25 @@
 <?php
 
+use Autto\Components\Alphabet\Symbol;
+use Autto\Components\Alphabet\Alphabet;
+
 
 class AlphabetTest extends PHPUnit_Framework_TestCase
 {
 
 	function testDuplication()
 	{
-		$a = new Autto\Symbol('a');
-		$b = new Autto\Symbol('a');
+		$a = new Symbol('a');
+		$b = new Symbol('a');
 
-		$alphabet = new Autto\Alphabet;
+		$alphabet = new Alphabet;
 
 		try {
 			$alphabet->add($a);
 			$alphabet->add($a);
 			$this->fail();
 
-		} catch (Autto\E\DuplicateItemException $e) {}
+		} catch (Autto\Exceptions\DuplicateItemException $e) {}
 
 
 		try {
@@ -24,7 +27,7 @@ class AlphabetTest extends PHPUnit_Framework_TestCase
 			$alphabet->add($b);
 			$this->fail();
 
-		} catch (Autto\E\DuplicateItemException $e) {}
+		} catch (Autto\Exceptions\DuplicateItemException $e) {}
 	}
 
 }

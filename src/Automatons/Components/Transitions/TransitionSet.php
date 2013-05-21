@@ -9,7 +9,11 @@
  * @link     https://github.com/uestla/Autto
  */
 
-namespace Autto;
+namespace Autto\Components\Transitions;
+
+use Autto\Set;
+use Autto\Components\States\State;
+use Autto\Components\Alphabet\Symbol;
 
 
 class TransitionSet extends Set
@@ -23,7 +27,7 @@ class TransitionSet extends Set
 	/** @param  mixed $items */
 	function __construct($items = NULL)
 	{
-		parent::__construct('Autto\Transition', $items);
+		parent::__construct('Autto\Components\Transitions\Transition', $items);
 	}
 
 

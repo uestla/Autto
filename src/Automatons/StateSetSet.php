@@ -18,7 +18,7 @@ class StateSetSet extends Set
 	/** @param  mixed $items */
 	function __construct($items = NULL)
 	{
-		parent::__construct('Autto\StateSet', $items);
+		parent::__construct('Autto\Components\States\StateSet', $items);
 	}
 
 

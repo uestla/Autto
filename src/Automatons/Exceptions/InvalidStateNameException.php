@@ -9,7 +9,7 @@
  * @link     https://github.com/uestla/Autto
  */
 
-namespace Autto\E;
+namespace Autto\Exceptions;
 
 
 class InvalidStateNameException extends \Exception

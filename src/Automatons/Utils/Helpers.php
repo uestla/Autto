@@ -2,7 +2,8 @@
 
 namespace Autto\Utils;
 
-use Autto;
+use Autto\Components\States\State;
+use Autto\Components\States\StateSet;
 
 
 class Helpers
@@ -13,10 +14,10 @@ class Helpers
 
 
 	/**
-	 * @param  Autto\StateSet $set
-	 * @return Autto\State
+	 * @param  StateSet $set
+	 * @return State
 	 */
-	static function joinStates(Autto\StateSet $set)
+	static function joinStates(StateSet $set)
 	{
 		$names = array();
 		foreach ($set as $state) {
@@ -24,7 +25,7 @@ class Helpers
 		}
 
 		sort($names);
-		return new Autto\State('{' . implode(static::S_STATE_SEP, $names) . '}');
+		return new State('{' . implode(static::S_STATE_SEP, $names) . '}');
 	}
 
 }

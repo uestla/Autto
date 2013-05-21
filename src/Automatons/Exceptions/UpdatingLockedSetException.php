@@ -9,8 +9,8 @@
  * @link     https://github.com/uestla/Autto
  */
 
-namespace Autto\E;
+namespace Autto\Exceptions;
 
 
-class DuplicateItemException extends \Exception
+class UpdatingLockedSetException extends \Exception
 {}

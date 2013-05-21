@@ -9,7 +9,10 @@
  * @link     https://github.com/uestla/Autto
  */
 
-namespace Autto;
+namespace Autto\Components\States;
+
+use Autto\Set;
+use Autto\Exceptions;
 
 
 class StateSet extends Set
@@ -23,7 +26,7 @@ class StateSet extends Set
 	/** @param  mixed $items */
 	function __construct($items = NULL)
 	{
-		parent::__construct('Autto\State', $items);
+		parent::__construct('Autto\Components\States\State', $items);
 	}
 
 
@@ -44,14 +47,14 @@ class StateSet extends Set
 	/**
 	 * @param  State $state
 	 * @return void
-	 * @throws E\DuplicateItemException
+	 * @throws Exceptions\DuplicateItemException
 	 */
 	function beforeAdd($state)
 	{
 		parent::beforeAdd($state);
 
 		if (isset($this->names[$state->getName()])) {
-			throw new E\DuplicateItemException;
+			throw new Exceptions\DuplicateItemException;
 		}
 	}
 

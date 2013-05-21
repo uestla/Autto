@@ -9,7 +9,10 @@
  * @link     https://github.com/uestla/Autto
  */
 
-namespace Autto;
+namespace Autto\Components\Alphabet;
+
+use Autto\Set;
+use Autto\Exceptions;
 
 
 class Alphabet extends Set
@@ -26,7 +29,7 @@ class Alphabet extends Set
 	/** @param  mixed $items */
 	function __construct($items = NULL)
 	{
-		parent::__construct('Autto\Symbol', $items);
+		parent::__construct('Autto\Components\Alphabet\Symbol', $items);
 	}
 
 
@@ -58,7 +61,7 @@ class Alphabet extends Set
 		parent::beforeAdd($symbol);
 
 		if (isset($this->values[$symbol->getValue()])) {
-			throw new E\DuplicateItemException;
+			throw new Exceptions\DuplicateItemException;
 		}
 	}
 

@@ -1,14 +1,14 @@
 <?php
 
-use Autto\State;
-use Autto\Symbol;
-use Autto\StateSet;
-use Autto\Alphabet;
 use Autto\Automaton;
-use Autto\Transition;
-use Autto\TransitionSet;
-use Autto\E\EmptySetException;
-use Autto\E\InvalidSetException;
+use Autto\Components\States\State;
+use Autto\Components\Alphabet\Symbol;
+use Autto\Components\States\StateSet;
+use Autto\Components\Alphabet\Alphabet;
+use Autto\Exceptions\EmptySetException;
+use Autto\Exceptions\InvalidSetException;
+use Autto\Components\Transitions\Transition;
+use Autto\Components\Transitions\TransitionSet;
 
 
 class AutomatonTest extends PHPUnit_Framework_TestCase
