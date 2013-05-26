@@ -111,15 +111,24 @@ class Set implements \Iterator, \Countable
 
 
 	/** @return void */
-	function lock()
+	final function lock()
 	{
-		$this->locked = TRUE;
+		if (!$this->locked) {
+			$this->beforeLock();
+			$this->locked = TRUE;
+		}
 	}
 
 
 
+	/** @return void */
+	function beforeLock()
+	{}
+
+
+
 	/** @return bool */
-	function isLocked()
+	final function isLocked()
 	{
 		return $this->locked;
 	}
@@ -130,7 +139,7 @@ class Set implements \Iterator, \Countable
 	 * @return void
 	 * @throws Exceptions\UpdatingLockedSetException
 	 */
-	function checkLock()
+	final function checkLock()
 	{
 		if ($this->locked) {
 			throw new Exceptions\UpdatingLockedSetException;
