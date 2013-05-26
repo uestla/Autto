@@ -77,8 +77,7 @@ class StateSet extends Set
 	 */
 	function getByName($name)
 	{
-		$self = clone $this;
-		foreach ($self as $state) {
+		foreach ($this as $state) {
 			if ($state->getName() === $name) {
 				return $state;
 			}

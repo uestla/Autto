@@ -127,9 +127,10 @@ class Automaton
 			$finals = new StateSet;
 
 			$queue = new StateSetSet(array($this->initials));
+
 			foreach ($queue as $set) {
 				$new = Utils\Helpers::joinStates($set);
-				$states->add($new);
+				Utils\Helpers::memorySaveAdd($states, $new);
 				!count($initials) && $initials->add($new);
 
 				foreach ($this->alphabet as $symbol) {
@@ -145,11 +146,9 @@ class Automaton
 					}
 
 					$target = Utils\Helpers::joinStates($to);
-					if (($tmp = $states->getByName($target->getName())) !== NULL) {
-						$target = $tmp;
-					}
-
+					Utils\Helpers::memorySaveAdd($states, $target);
 					$transitions->add(new Transition($new, new StateSet(array($target)), $symbol));
+
 					!$queue->has($to) && $queue->add($to);
 				}
 			}
