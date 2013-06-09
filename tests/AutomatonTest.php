@@ -58,7 +58,7 @@ class AutomatonTest extends PHPUnit_Framework_TestCase
 			}
 		}
 
-		$this->assertEquals(2, count($automaton->epsilonClosure($state)));
+		$this->assertEquals(2, count(\Autto\Utils\Helpers::epsilonClosure($automaton, $state)));
 	}
 
 

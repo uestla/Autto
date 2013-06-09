@@ -18,6 +18,28 @@ class Helpers
 
 
 	/**
+	 * @param  Autto\Automaton $automaton
+	 * @param  State $state
+	 * @return StateSet
+	 */
+	static function epsilonClosure(Autto\Automaton $automaton, State $state)
+	{
+		$closure = new StateSet(array($state));
+		foreach ($closure as $s) {
+			foreach ($automaton->getTransitions()->filterByState($s)->filterByEpsilon() as $transition) {
+				foreach ($transition->getTo() as $target) {
+					!$closure->has($target) && $closure->add($target);
+				}
+			}
+		}
+
+		$closure->lock();
+		return $closure;
+	}
+
+
+
+	/**
 	 * @param  StateSet $set
 	 * @return State
 	 */

@@ -65,7 +65,7 @@ class Automaton
 			$finals = new StateSet;
 
 			foreach ($this->states as $state) {
-				$closure = $this->epsilonClosure($state);
+				$closure = Utils\Helpers::epsilonClosure($this, $state);
 
 				foreach ($this->alphabet as $symbol) {
 					if (!$symbol->isEpsilon()) {
@@ -91,26 +91,6 @@ class Automaton
 		}
 
 		return $this;
-	}
-
-
-
-	/**
-	 * @param  State $state
-	 * @return StateSet
-	 */
-	function epsilonClosure(State $state)
-	{
-		$closure = new StateSet(array($state));
-		foreach ($closure as $s) {
-			foreach ($this->transitions->filterByState($s)->filterByEpsilon() as $transition) {
-				foreach ($transition->getTo() as $target) {
-					!$closure->has($target) && $closure->add($target);
-				}
-			}
-		}
-
-		return $closure;
 	}
 
 

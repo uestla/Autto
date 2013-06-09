@@ -14,6 +14,7 @@ namespace Autto\Components\Transitions;
 use Autto\Set;
 use Autto\Components\States\State;
 use Autto\Components\Alphabet\Symbol;
+use Autto\Components\States\StateSet;
 
 
 class TransitionSet extends Set
@@ -41,6 +42,19 @@ class TransitionSet extends Set
 		parent::add($item);
 		$item->getTo()->lock();
 		return $this;
+	}
+
+
+
+	/** @return StateSet[] */
+	function toTargetSet()
+	{
+		$targets = array();
+		foreach ($this as $transition) {
+			$targets[] = $transition->getTo();
+		}
+
+		return $targets;
 	}
 
 
@@ -104,14 +118,14 @@ class TransitionSet extends Set
 	/**
 	 * @param  TransitionSet $set
 	 * @param  State|Symbol $arg
-	 * @param  \Closure $loader
+	 * @param  \Closure $filter
 	 * @return TransitionSet
 	 */
-	private static function loadFilter(TransitionSet $set, $arg, \Closure $loader)
+	private static function loadFilter(TransitionSet $set, $arg, \Closure $filter)
 	{
 		$key = md5(spl_object_hash($set) . spl_object_hash($arg));
 		if (!$set->isLocked() || !isset(self::$filters[$key])) {
-			self::$filters[$key] = $set->filter($loader);
+			self::$filters[$key] = $set->filter($filter);
 		}
 
 		return self::$filters[$key];
