@@ -12,5 +12,5 @@
 namespace Autto\Exceptions;
 
 
-class NotSupportedException extends \Exception
+class TransitionsAlreadySetException extends \Exception
 {}

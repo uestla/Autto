@@ -162,12 +162,61 @@ class Automaton
 
 
 
+	/** @return Automaton */
+	function minimize()
+	{
+		$this->determinize();
+
+		$current = NULL;
+		while (TRUE) {
+			$new = Utils\Helpers::buildGroupTable($this, $current);
+			if (count($new) === count($current)) { // no new groups
+				break;
+			}
+
+			$current = $new;
+		}
+
+		$states = new StateSet;
+		$initials = new StateSet;
+		$finals = new StateSet;
+		$transitions = new TransitionSet;
+
+		foreach ($current as $group) {
+			$state = $group->toState();
+			$states->add($state);
+
+			foreach ($group->getStates() as $s) {
+				!$initials->has($state) && $this->initials->has($s) && $initials->add($state);
+				!$finals->has($state) && $this->finals->has($s) && $finals->add($state);
+			}
+
+			foreach ($group->getStates() as $s) {
+				foreach ($group->getTransitions()->filterByState($s) as $transition) {
+					$transitions->add(new Transition(
+							$state,
+							$transition->getTo(),
+							$transition->getOn()
+					));
+				}
+
+				break; // intentionally break - only first transition needed (rest is the same)
+			}
+		}
+
+		$this->construct($states, $this->alphabet, $transitions, $initials, $finals);
+		return $this;
+	}
+
+
+
 	/**
 	 * @param  StateSet $states
 	 * @param  Alphabet $alphabet
 	 * @param  TransitionSet $transitions
 	 * @param  StateSet $initials
 	 * @param  StateSet $finals
+	 * @return void
 	 */
 	private function construct(StateSet $states, Alphabet $alphabet, TransitionSet $transitions,
 			StateSet $initials, StateSet $finals)

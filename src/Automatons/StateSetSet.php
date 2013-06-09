@@ -24,15 +24,14 @@ class StateSetSet extends Set
 
 
 	/**
-	 * @param  StateSet $set
+	 * @param  Components\States\StateSet $set
 	 * @return bool
 	 */
 	function has($set)
 	{
-		$count = count($set);
 		$self = clone $this;
 		foreach ($self as $stateSet) {
-			if (count($stateSet) === $count && $set->isSubsetOf($stateSet)) {
+			if ($set->isEqualTo($stateSet)) {
 				return TRUE;
 			}
 		}

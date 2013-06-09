@@ -91,4 +91,17 @@ class AutomatonTest extends PHPUnit_Framework_TestCase
 		$renderer->render($automaton);
 	}
 
+
+
+	function testMinimization()
+	{
+		$renderer = new Autto\Renderers\AsciiRenderer;
+
+		$automaton = new TestingAutomaton;
+		$renderer->render($automaton);
+
+		$automaton->minimize();
+		$renderer->render($automaton);
+	}
+
 }

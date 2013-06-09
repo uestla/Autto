@@ -110,6 +110,17 @@ class Set implements \Iterator, \Countable
 
 
 
+	/**
+	 * @param  Set $set
+	 * @return bool
+	 */
+	function isEqualTo(Set $set)
+	{
+		return $this->isSubsetOf($set) && count($this) === count($set);
+	}
+
+
+
 	/** @return void */
 	final function lock()
 	{
